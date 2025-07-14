@@ -1,0 +1,31 @@
+# .gitignore
+
+# Byte-code files
+*.pyc
+__pycache__/
+
+# Virtual environment
+venv/
+.venv/ # Some tools might name it .venv
+
+# Database
+db.sqlite3
+*.sqlite3-journal
+
+# Media and static files (if you add them later and they are user-uploaded)
+/media/
+/static_root/ # Or whatever you set STATIC_ROOT to in settings.py for collected static files
+
+# Environment variables / Secret keys
+.env
+*.env
+*.ini
+*.log
+
+# IDE specific files (e.g., VS Code)
+.vscode/
+.idea/
+
+# Operating System files
+.DS_Store
+Thumbs.db
