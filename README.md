@@ -1,8 +1,3 @@
-Here’s a complete and well-structured `README.md` for your **🩺 AI Symptom Classifier (Django + LangGraph + Gemini API)** project:
-
----
-
-
 # 🩺 AI Symptom Classifier (Django + LangGraph + Gemini API)
 
 This project is a web-based symptom classifier built with Django, leveraging the power of **LangGraph** for orchestrating conversational flows and the **Google Gemini API** for intelligent symptom analysis. It provides initial symptom classification and general information, guiding users toward appropriate next steps.
