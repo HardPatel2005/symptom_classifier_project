@@ -1,0 +1,1 @@
+web: gunicorn symptom_classifier_project.wsgi:application

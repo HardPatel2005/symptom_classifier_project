@@ -1,31 +1,49 @@
-# .gitignore
-
-# Byte-code files
+# Python bytecode
 *.pyc
 __pycache__/
+*.pyo
+*.pyd
 
-# Virtual environment
+# Virtual environments
 venv/
-.venv/ # Some tools might name it .venv
+.venv/
 
-# Database
+# VSCode / JetBrains
+.vscode/
+.idea/
+
+# Django database & migrations
 db.sqlite3
 *.sqlite3-journal
+*/migrations/__pycache__/
+*/migrations/*.pyc
 
-# Media and static files (if you add them later and they are user-uploaded)
-/media/
-/static_root/ # Or whatever you set STATIC_ROOT to in settings.py for collected static files
+# Media and collected static files (NOT your app-level static/)
+media/
+staticfiles/
+static_root/
 
-# Environment variables / Secret keys
+# Environment variables & secrets
 .env
 *.env
 *.ini
 *.log
 
-# IDE specific files (e.g., VS Code)
-.vscode/
-.idea/
-
-# Operating System files
+# OS-specific files
 .DS_Store
 Thumbs.db
+
+# Pytest / Coverage
+htmlcov/
+.coverage
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,[0-9]*.cover
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/

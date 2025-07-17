@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: symptom-classifier
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn symptom_classifier_project.wsgi:application
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        sync: false
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: symptom-classifier.onrender.com
+      - key: GOOGLE_API_KEY
+        sync: false
