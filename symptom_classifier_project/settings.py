@@ -15,7 +15,10 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "insecure-default-key")
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 # Accept the domain from Render or localhost in dev
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost 127.0.0.1").split()
+import os
+
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+
 
 # Application definition
 INSTALLED_APPS = [
