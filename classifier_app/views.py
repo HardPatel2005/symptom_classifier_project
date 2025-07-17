@@ -2,6 +2,10 @@
 
 # --- Imports ---
 import os
+import os
+from dotenv import load_dotenv
+load_dotenv()  # loads from .env into os.environ
+
 from typing import TypedDict, Annotated
 from django.shortcuts import render
 from django.http import HttpRequest
@@ -103,6 +107,7 @@ def general_node(state: AgentState) -> AgentState:
     return state
 
 def detailed_info_node(state: AgentState) -> AgentState:
+    
     print("\nNew Node: Generating detailed info...")
     classification = state.get("classification", "general")
     symptom = state.get("symptom", "a health concern")

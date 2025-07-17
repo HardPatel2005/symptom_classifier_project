@@ -1,7 +1,14 @@
 # symptom_classifier_project/settings.py
 
 import os
-from pathlib import Path # <--- ADD THIS LINE
+from pathlib import Path
+import dotenv
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load .env file
+dotenv.load_dotenv(dotenv_path=BASE_DIR / '.env')
+
 # symptom_classifier_project/settings.py
 
 # ... (other settings above) ...
