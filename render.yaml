@@ -3,18 +3,53 @@ services:
     name: symptom-classifier
     runtime: python
     buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn symptom_classifier_project.wsgi:application
+    healthCheckPath: / # Or a more specific health check path if your app has one
+    autoDeploy: true # Enable auto-deploy on push to git
+    envVars:
+      # --- IMPORTANT: DATABASE_URL ADDED/UPDATED HERE ---
+      - key: DATABASE_URL
+        # Set the value directly. REMEMBER: For production, this is usually kept in Render UI and sync: false
+        # For a public repo, it's a security risk to hardcode sensitive values like this.
+        value: "postgresql://neondb_owner:npg_KmsUbrWk1EG2@ep-green-bread-a1wgm9pk-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+      # --- END DATABASE_URL ADDITION ---
+
+      - key: DJANGO_SECRET_KEY
+        sync: false # Expected to be set in Render UI for security
+      - key: DEBUG
+        value: "False" # IMPORTANT for production
+      - key: ALLOWED_HOSTS
+        value: symptom-classifier.onrender.com # Add other domains if needed, separated by commas
+      - key: GOOGLE_API_KEY
+        sync: false # Expected to be set in Render UI for security
+
+  - type: job # This defines a job to run once per deploy
+    name: migrate-and-collect-static
+    runtime: python
+    buildCommand: pip install -r requirements.txt
     startCommand: |
       bash -c "
-        python manage.py migrate &&
-        python manage.py collectstatic --noinput &&
-        gunicorn symptom_classifier_project.wsgi:application
+        python manage.py migrate --noinput &&
+        python manage.py collectstatic --noinput
       "
+    onDeploy: true # This job will run automatically on every new deployment of the service
     envVars:
+      # It's crucial for the job to have access to the same DATABASE_URL and SECRET_KEY
+      # The job can now reference the DATABASE_URL defined in the web service's envVars
+      - key: DATABASE_URL
+        fromService:
+          type: web # Refers to the 'web' service defined above
+          name: symptom-classifier
+          envVar: DATABASE_URL
       - key: DJANGO_SECRET_KEY
-        sync: false
+        fromService:
+          type: web
+          name: symptom-classifier
+          envVar: DJANGO_SECRET_KEY
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
-        value: symptom-classifier.onrender.com
-      - key: GOOGLE_API_KEY
-        sync: false
+        fromService:
+          type: web
+          name: symptom-classifier
+          envVar: ALLOWED_HOSTS
